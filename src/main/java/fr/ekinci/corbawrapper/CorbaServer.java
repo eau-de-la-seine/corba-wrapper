@@ -18,22 +18,22 @@ import org.omg.PortableServer.Servant;
  * 
  * @author Gokan EKINCI
  */
-public class CORBAServer implements AutoCloseable {
+public class CorbaServer implements AutoCloseable {
     private final ORB orb;
     private final POA rootpoa;
     private final NamingContextExt ncRef;
 
     /**
-     * CORBAServer constructor
+     * CorbaServer constructor
      *
      * @param host
      * @param port
-     * @throws CORBAException
+     * @throws CorbaException
      * which encapsulate:
      *     org.omg.PortableServer.POAManagerPackage.AdapterInactive
      *     org.omg.CORBA.ORBPackage.InvalidName
      */
-    public CORBAServer(String host, int port) throws CORBAException {
+    public CorbaServer(String host, int port) throws CorbaException {
         try {
             // Initialize the ORB
             this.orb = ORB.init(
@@ -51,7 +51,7 @@ public class CORBAServer implements AutoCloseable {
             this.ncRef = NamingContextExtHelper.narrow(objRef);
         } catch (org.omg.PortableServer.POAManagerPackage.AdapterInactive
                 | org.omg.CORBA.ORBPackage.InvalidName e){
-            throw new CORBAException(e);
+            throw new CorbaException(e);
         }
     }
 
@@ -61,7 +61,7 @@ public class CORBAServer implements AutoCloseable {
      * @param serviceName
      * @param implementation
      * @param helpClass
-     * @throws CORBAException
+     * @throws CorbaException
      * which encapsulate:
      *     java.lang.IllegalArgumentException
      *     java.lang.SecurityException
@@ -77,9 +77,9 @@ public class CORBAServer implements AutoCloseable {
     public <IMPL extends Servant, HELP> void addService(
         String serviceName,
         IMPL implementation,
-        Class<HELP> helpClass    
+        Class<HELP> helpClass
     ) 
-        throws CORBAException
+        throws CorbaException
     {
         try {
             org.omg.CORBA.Object ref = this.rootpoa.servant_to_reference(implementation);
@@ -97,7 +97,7 @@ public class CORBAServer implements AutoCloseable {
                 | org.omg.CosNaming.NamingContextPackage.CannotProceed
                 | org.omg.PortableServer.POAPackage.ServantNotActive
                 | org.omg.PortableServer.POAPackage.WrongPolicy e){
-            throw new CORBAException(e);
+            throw new CorbaException(e);
         }
     }
 
