@@ -43,7 +43,7 @@ public class CorbaClient implements AutoCloseable {
      * 
      * @param serviceName
      * @param helpClass
-     * @return
+     * @return remote object
      * @throws CorbaException
      * which encapsulate:
      *     java.lang.SecurityException
